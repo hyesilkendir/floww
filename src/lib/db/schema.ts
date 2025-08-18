@@ -16,6 +16,7 @@ import { relations } from 'drizzle-orm';
 // Users table
 export const users = mysqlTable('users', {
   id: varchar('id', { length: 191 }).primaryKey(),
+  username: varchar('username', { length: 50 }).notNull().unique(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   password: varchar('password', { length: 255 }).notNull(),
   name: varchar('name', { length: 255 }).notNull(),
@@ -23,6 +24,7 @@ export const users = mysqlTable('users', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
+  usernameIdx: uniqueIndex('username_idx').on(table.username),
   emailIdx: uniqueIndex('email_idx').on(table.email),
 }));
 

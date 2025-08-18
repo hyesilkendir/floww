@@ -17,7 +17,9 @@
     "db:migrate:fresh": "npm run db:drop && npm run db:generate && npm run db:migrate:run",
     "test:db": "node test-db-connection.js",
     "test:migration": "node test-migration.js",
-    "setup": "npm install && cp env.example .env.local && npm run test:db"
+    "setup": "npm install && cp env.example .env.local && npm run test:db",
+    "vercel-build": "npm run build",
+    "postbuild": "node production-setup.js"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.3.2",

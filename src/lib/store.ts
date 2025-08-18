@@ -57,7 +57,7 @@ interface AppState {
   
   // Actions
   login: (username: string, password: string) => Promise<boolean>;
-  register: (userData: { email: string; password: string; name: string }) => Promise<boolean>;
+  register: (userData: { username: string; email: string; password: string; name: string; companyName: string }) => Promise<boolean>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<boolean>;
   setAuth: (user: User) => void;
   logout: () => void;
@@ -234,7 +234,7 @@ export const useAppStore = create<AppState>()(
           // 1. ÖNCE: Store'dan tüm kullanıcıları kontrol et (güncellenmiş şifreler dahil)
           const allUsers = get().users;
           const userFromStore = allUsers.find(u => 
-            (u.email === username || (username === 'admin' && u.email === 'admin@calaf.co')) 
+            (u.username === username || u.email === username || (username === 'admin' && u.email === 'admin@calaf.co')) 
             && u.password === password
           );
           
@@ -245,7 +245,7 @@ export const useAppStore = create<AppState>()(
 
           // 2. SONRA: Mevcut session user'ı kontrol et
           const currentUser = get().user;
-          if (currentUser && (username === currentUser.email || username === 'admin') && password === currentUser.password) {
+          if (currentUser && (username === currentUser.username || username === currentUser.email || username === 'admin') && password === currentUser.password) {
             set({ user: currentUser, isAuthenticated: true });
             return true;
           }
@@ -254,6 +254,7 @@ export const useAppStore = create<AppState>()(
           if ((username === 'admin' || username === 'admin@calaf.co') && password === '532d7315' && allUsers.length === 0) {
             const demoUser: User = {
               id: '1',
+              username: 'admin',
               email: 'admin@calaf.co',
               password: '532d7315',
               name: 'Admin User',
@@ -284,19 +285,20 @@ export const useAppStore = create<AppState>()(
         get().setLoading(true);
         try {
           // Check if user already exists
-          const existingUser = get().users.find(u => u.email === userData.email);
+          const existingUser = get().users.find(u => u.email === userData.email || u.username === userData.username);
           if (existingUser) {
-            get().setError('Bu e-posta adresi zaten kullanımda.');
+            get().setError('Bu e-posta adresi veya kullanıcı adı zaten kullanımda.');
             return false;
           }
 
-          // Create new user with default company
+          // Create new user
           const newUser: User = {
             id: generateId(),
+            username: userData.username,
             email: userData.email,
             password: userData.password, // In a real app, hash this
             name: userData.name,
-            companyName: 'CALAF.CO', // Default company
+            companyName: userData.companyName,
             createdAt: new Date(),
             updatedAt: new Date(),
           };
@@ -1301,6 +1303,7 @@ export const useAppStore = create<AppState>()(
         try {
           const demoUser: User = {
             id: '1',
+            username: 'admin',
             email: 'admin@calaf.co',
             password: '123456',
             name: 'Calaf.co Admin',

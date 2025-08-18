@@ -18,9 +18,11 @@ export default function LoginPage() {
   
   const [activeTab, setActiveTab] = useState('login');
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
+  const [companyName, setCompanyName] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -39,7 +41,7 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const success = await login(email, password);
+      const success = await login(username || email, password);
       if (success) {
         router.push('/dashboard');
       } else {
@@ -73,9 +75,11 @@ export default function LoginPage() {
     try {
       // Demo için basit kayıt - gerçek uygulamada API çağrısı yapılır
       const success = await register({
+        username: username,
         email: email,
         password: password,
         name: name,
+        companyName: companyName,
       });
       
       if (success) {
@@ -107,14 +111,14 @@ export default function LoginPage() {
             <TabsContent value="login" className="space-y-4">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="login-email">Kullanıcı Adı</Label>
+                  <Label htmlFor="login-username">Kullanıcı Adı</Label>
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                     <Input
-                      id="login-email"
+                      id="login-username"
                       type="text"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                       placeholder="Kullanıcı adı"
                       className="pl-10"
                       required
@@ -175,6 +179,22 @@ export default function LoginPage() {
             <TabsContent value="register" className="space-y-4">
               <form onSubmit={handleRegister} className="space-y-4">
                 <div className="space-y-2">
+                  <Label htmlFor="register-username">Kullanıcı Adı</Label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                    <Input
+                      id="register-username"
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="kullaniciadi"
+                      className="pl-10"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
                   <Label htmlFor="register-name">Ad Soyad</Label>
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -200,6 +220,22 @@ export default function LoginPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="ornek@firma.com"
+                      className="pl-10"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="register-company">Firma Adı</Label>
+                  <div className="relative">
+                    <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                    <Input
+                      id="register-company"
+                      type="text"
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      placeholder="Firma adınız"
                       className="pl-10"
                       required
                     />
