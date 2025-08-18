@@ -65,19 +65,19 @@ async function setupDefaultData() {
           updatedAt: new Date(),
         };
         await kv.set('companySettings', defaultSettings);
-        console.log('✅ Default firma ayarları eklendi');
+        console.log('✅ Default firma ayarlari eklendi');
       }
       
-      console.log('🎉 Vercel KV setup tamamlandı!');
-      console.log('🔗 Uygulama hazır: Admin kullanıcısı = admin/admin123');
+      console.log('🎉 Vercel KV setup tamamlandi!');
+      console.log('🔗 Uygulama hazir: Admin kullanicisi = admin/admin123');
       
     } else {
-      console.log('❌ KV ping testi başarısız');
+      console.log('❌ KV ping testi basarisiz');
     }
     
   } catch (error) {
-    console.error('❌ Default data setup hatası:', error);
-    console.log('💡 Bu hata production'da görülür, development'ta normal');
+    console.error('❌ Default data setup hatasi:', error);
+    console.log('💡 Bu hata production da gorulur, development ta normal');
   }
 }
 
@@ -91,17 +91,17 @@ async function main() {
   if (kvAvailable) {
     await setupDefaultData();
   } else {
-    console.log('⏭️  KV setup atlandı (environment variables eksik)');
+    console.log('⏭️  KV setup atlandi (environment variables eksik)');
     console.log('');
-    console.log('📖 Manuel Setup Adımları:');
+    console.log('📖 Manuel Setup Adimlari:');
     console.log('1. Vercel Dashboard > Project > Storage');
     console.log('2. Create Database > KV');
     console.log('3. Environment variables otomatik eklenir');
-    console.log('4. Redeploy yapın');
+    console.log('4. Redeploy yapin');
   }
 }
 
-// Script çalıştır
+// Script calistir
 if (require.main === module) {
   main().catch(console.error);
 }
