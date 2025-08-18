@@ -41,11 +41,5 @@
       "destination": "/login",
       "permanent": false
     }
-  ],
-  "storage": [
-    {
-      "name": "calaf-kv",
-      "type": "kv"
-    }
   ]
 }
