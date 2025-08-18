@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
-import { useAppStore } from '@/lib/store';
+import { useAppStore } from '@/lib/kv-store';
 import { AuthLayout } from '@/components/layout/auth-layout';
 import type { Quote, QuoteItem } from '@/lib/database-schema';
 import { format, addDays } from 'date-fns';

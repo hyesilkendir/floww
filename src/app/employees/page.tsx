@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useAppStore } from '@/lib/store';
+import { useAppStore } from '@/lib/kv-store';
 import { AuthLayout } from '@/components/layout/auth-layout';
 import type { Employee, Bonus } from '@/lib/database-schema';
 import { format } from 'date-fns';

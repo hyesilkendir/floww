@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { AuthLayout } from '@/components/layout/auth-layout';
-import { useAppStore } from '@/lib/store';
+import { useAppStore } from '@/lib/kv-store';
 import type { RegularPayment } from '@/lib/database-schema';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

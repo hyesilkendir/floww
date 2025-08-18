@@ -12,7 +12,7 @@ import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { AuthLayout } from '@/components/layout/auth-layout';
-import { useAppStore } from '@/lib/store';
+import { useAppStore } from '@/lib/kv-store';
 import { Plus, Edit, Trash2, Wallet, DollarSign, Eye } from 'lucide-react';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';

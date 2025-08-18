@@ -39,14 +39,13 @@
     {
       "source": "/",
       "destination": "/login",
-      "permanent": false,
-      "has": [
-        {
-          "type": "cookie",
-          "key": "authenticated",
-          "value": "false"
-        }
-      ]
+      "permanent": false
+    }
+  ],
+  "storage": [
+    {
+      "name": "calaf-kv",
+      "type": "kv"
     }
   ]
 }

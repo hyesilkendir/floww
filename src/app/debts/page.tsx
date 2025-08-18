@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { useAppStore } from '@/lib/store';
+import { useAppStore } from '@/lib/kv-store';
 import { AuthLayout } from '@/components/layout/auth-layout';
 import type { Debt } from '@/lib/database-schema';
 import { format, isPast, differenceInDays } from 'date-fns';
