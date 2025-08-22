@@ -216,6 +216,27 @@ export class VercelKVAdapter {
     return newCategory;
   }
 
+  async updateCategory(userId: string, id: string, updates: Partial<Category>): Promise<Category | null> {
+    const categories = await kv.get<Category[]>(`categories:${userId}`) || [];
+    const index = categories.findIndex(c => c.id === id);
+    
+    if (index === -1) return null;
+    
+    categories[index] = { ...categories[index], ...updates };
+    await kv.set(`categories:${userId}`, categories);
+    return categories[index];
+  }
+
+  async deleteCategory(userId: string, id: string): Promise<boolean> {
+    const categories = await kv.get<Category[]>(`categories:${userId}`) || [];
+    const filtered = categories.filter(c => c.id !== id);
+    
+    if (filtered.length === categories.length) return false;
+    
+    await kv.set(`categories:${userId}`, filtered);
+    return true;
+  }
+
   // Quote Operations
   async getQuotes(userId: string): Promise<Quote[]> {
     return await kv.get<Quote[]>(`quotes:${userId}`) || [];
@@ -235,6 +256,27 @@ export class VercelKVAdapter {
     quotes.push(newQuote);
     await kv.set(`quotes:${userId}`, quotes);
     return newQuote;
+  }
+
+  async updateQuote(userId: string, id: string, updates: Partial<Quote>): Promise<Quote | null> {
+    const quotes = await this.getQuotes(userId);
+    const index = quotes.findIndex(q => q.id === id);
+    
+    if (index === -1) return null;
+    
+    quotes[index] = { ...quotes[index], ...updates, updatedAt: new Date() };
+    await kv.set(`quotes:${userId}`, quotes);
+    return quotes[index];
+  }
+
+  async deleteQuote(userId: string, id: string): Promise<boolean> {
+    const quotes = await this.getQuotes(userId);
+    const filtered = quotes.filter(q => q.id !== id);
+    
+    if (filtered.length === quotes.length) return false;
+    
+    await kv.set(`quotes:${userId}`, filtered);
+    return true;
   }
 
   // Invoice Operations
@@ -258,6 +300,27 @@ export class VercelKVAdapter {
     return newInvoice;
   }
 
+  async updateInvoice(userId: string, id: string, updates: Partial<Invoice>): Promise<Invoice | null> {
+    const invoices = await this.getInvoices(userId);
+    const index = invoices.findIndex(i => i.id === id);
+    
+    if (index === -1) return null;
+    
+    invoices[index] = { ...invoices[index], ...updates, updatedAt: new Date() };
+    await kv.set(`invoices:${userId}`, invoices);
+    return invoices[index];
+  }
+
+  async deleteInvoice(userId: string, id: string): Promise<boolean> {
+    const invoices = await this.getInvoices(userId);
+    const filtered = invoices.filter(i => i.id !== id);
+    
+    if (filtered.length === invoices.length) return false;
+    
+    await kv.set(`invoices:${userId}`, filtered);
+    return true;
+  }
+
   // Debt Operations
   async getDebts(userId: string): Promise<Debt[]> {
     return await kv.get<Debt[]>(`debts:${userId}`) || [];
@@ -279,6 +342,27 @@ export class VercelKVAdapter {
     return newDebt;
   }
 
+  async updateDebt(userId: string, id: string, updates: Partial<Debt>): Promise<Debt | null> {
+    const debts = await this.getDebts(userId);
+    const index = debts.findIndex(d => d.id === id);
+    
+    if (index === -1) return null;
+    
+    debts[index] = { ...debts[index], ...updates, updatedAt: new Date() };
+    await kv.set(`debts:${userId}`, debts);
+    return debts[index];
+  }
+
+  async deleteDebt(userId: string, id: string): Promise<boolean> {
+    const debts = await this.getDebts(userId);
+    const filtered = debts.filter(d => d.id !== id);
+    
+    if (filtered.length === debts.length) return false;
+    
+    await kv.set(`debts:${userId}`, filtered);
+    return true;
+  }
+
   // Cash Account Operations
   async getCashAccounts(userId: string): Promise<CashAccount[]> {
     return await kv.get<CashAccount[]>(`cashAccounts:${userId}`) || [];
@@ -298,6 +382,27 @@ export class VercelKVAdapter {
     accounts.push(newAccount);
     await kv.set(`cashAccounts:${userId}`, accounts);
     return newAccount;
+  }
+
+  async updateCashAccount(userId: string, id: string, updates: Partial<CashAccount>): Promise<CashAccount | null> {
+    const accounts = await this.getCashAccounts(userId);
+    const index = accounts.findIndex(a => a.id === id);
+    
+    if (index === -1) return null;
+    
+    accounts[index] = { ...accounts[index], ...updates, updatedAt: new Date() };
+    await kv.set(`cashAccounts:${userId}`, accounts);
+    return accounts[index];
+  }
+
+  async deleteCashAccount(userId: string, id: string): Promise<boolean> {
+    const accounts = await this.getCashAccounts(userId);
+    const filtered = accounts.filter(a => a.id !== id);
+    
+    if (filtered.length === accounts.length) return false;
+    
+    await kv.set(`cashAccounts:${userId}`, filtered);
+    return true;
   }
 
   // Global data (currencies, company settings)

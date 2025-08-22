@@ -9,15 +9,7 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "validate": "npm run type-check && npm run lint",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio",
-    "db:drop": "drizzle-kit drop",
-    "db:migrate:run": "tsx src/lib/db/migrate.ts",
-    "db:migrate:fresh": "npm run db:drop && npm run db:generate && npm run db:migrate:run",
-    "test:db": "node test-db-connection.js",
-    "test:migration": "node test-migration.js",
-    "setup": "npm install && cp env.example .env.local && npm run test:db",
+    "setup": "npm install && cp env.example .env.local",
     "vercel-build": "npm run build",
     "postbuild": "node vercel-kv-setup.js"
   },
@@ -36,12 +28,9 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.1",
-    "drizzle-kit": "^0.31.4",
-    "drizzle-orm": "^0.44.4",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",
     "lucide-react": "^0.536.0",
-    "mysql2": "^3.14.3",
     "next": "^14.2.18",
     "react": "^18",
     "react-dom": "^18",
@@ -58,7 +47,6 @@
     "eslint-config-next": "15.4.5",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "tsx": "^4.20.3",
     "typescript": "^5"
   }
 }

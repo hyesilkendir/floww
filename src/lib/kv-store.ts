@@ -450,11 +450,39 @@ export const useAppStore = create<AppState>()(
       },
       
       updateCategory: async (id, updates) => {
-        // Category update logic here
+        const user = get().user;
+        if (!user) return;
+        
+        try {
+          const updatedCategory = await kvAdapter.updateCategory(user.id, id, updates);
+          if (updatedCategory) {
+            set((state) => ({
+              categories: state.categories.map((category) =>
+                category.id === id ? updatedCategory : category
+              ),
+            }));
+          }
+        } catch (err) {
+          console.error('Update category error:', err);
+          get().setError('Kategori güncellenirken bir hata oluştu.');
+        }
       },
       
       deleteCategory: async (id) => {
-        // Category delete logic here
+        const user = get().user;
+        if (!user) return;
+        
+        try {
+          const success = await kvAdapter.deleteCategory(user.id, id);
+          if (success) {
+            set((state) => ({
+              categories: state.categories.filter((category) => category.id !== id),
+            }));
+          }
+        } catch (err) {
+          console.error('Delete category error:', err);
+          get().setError('Kategori silinirken bir hata oluştu.');
+        }
       },
       
       // Quote actions
@@ -472,11 +500,39 @@ export const useAppStore = create<AppState>()(
       },
       
       updateQuote: async (id, updates) => {
-        // Quote update logic here
+        const user = get().user;
+        if (!user) return;
+        
+        try {
+          const updatedQuote = await kvAdapter.updateQuote(user.id, id, updates);
+          if (updatedQuote) {
+            set((state) => ({
+              quotes: state.quotes.map((quote) =>
+                quote.id === id ? updatedQuote : quote
+              ),
+            }));
+          }
+        } catch (err) {
+          console.error('Update quote error:', err);
+          get().setError('Teklif güncellenirken bir hata oluştu.');
+        }
       },
       
       deleteQuote: async (id) => {
-        // Quote delete logic here
+        const user = get().user;
+        if (!user) return;
+        
+        try {
+          const success = await kvAdapter.deleteQuote(user.id, id);
+          if (success) {
+            set((state) => ({
+              quotes: state.quotes.filter((quote) => quote.id !== id),
+            }));
+          }
+        } catch (err) {
+          console.error('Delete quote error:', err);
+          get().setError('Teklif silinirken bir hata oluştu.');
+        }
       },
       
       // Debt actions
@@ -494,11 +550,39 @@ export const useAppStore = create<AppState>()(
       },
       
       updateDebt: async (id, updates) => {
-        // Debt update logic here
+        const user = get().user;
+        if (!user) return;
+        
+        try {
+          const updatedDebt = await kvAdapter.updateDebt(user.id, id, updates);
+          if (updatedDebt) {
+            set((state) => ({
+              debts: state.debts.map((debt) =>
+                debt.id === id ? updatedDebt : debt
+              ),
+            }));
+          }
+        } catch (err) {
+          console.error('Update debt error:', err);
+          get().setError('Borç güncellenirken bir hata oluştu.');
+        }
       },
       
       deleteDebt: async (id) => {
-        // Debt delete logic here
+        const user = get().user;
+        if (!user) return;
+        
+        try {
+          const success = await kvAdapter.deleteDebt(user.id, id);
+          if (success) {
+            set((state) => ({
+              debts: state.debts.filter((debt) => debt.id !== id),
+            }));
+          }
+        } catch (err) {
+          console.error('Delete debt error:', err);
+          get().setError('Borç silinirken bir hata oluştu.');
+        }
       },
       
       // Cash account actions
@@ -516,11 +600,39 @@ export const useAppStore = create<AppState>()(
       },
       
       updateCashAccount: async (id, updates) => {
-        // Cash account update logic here
+        const user = get().user;
+        if (!user) return;
+        
+        try {
+          const updatedAccount = await kvAdapter.updateCashAccount(user.id, id, updates);
+          if (updatedAccount) {
+            set((state) => ({
+              cashAccounts: state.cashAccounts.map((account) =>
+                account.id === id ? updatedAccount : account
+              ),
+            }));
+          }
+        } catch (err) {
+          console.error('Update cash account error:', err);
+          get().setError('Kasa hesabı güncellenirken bir hata oluştu.');
+        }
       },
       
       deleteCashAccount: async (id) => {
-        // Cash account delete logic here
+        const user = get().user;
+        if (!user) return;
+        
+        try {
+          const success = await kvAdapter.deleteCashAccount(user.id, id);
+          if (success) {
+            set((state) => ({
+              cashAccounts: state.cashAccounts.filter((account) => account.id !== id),
+            }));
+          }
+        } catch (err) {
+          console.error('Delete cash account error:', err);
+          get().setError('Kasa hesabı silinirken bir hata oluştu.');
+        }
       },
       
       // Invoice actions
@@ -538,11 +650,39 @@ export const useAppStore = create<AppState>()(
       },
       
       updateInvoice: async (id, updates) => {
-        // Invoice update logic here
+        const user = get().user;
+        if (!user) return;
+        
+        try {
+          const updatedInvoice = await kvAdapter.updateInvoice(user.id, id, updates);
+          if (updatedInvoice) {
+            set((state) => ({
+              invoices: state.invoices.map((invoice) =>
+                invoice.id === id ? updatedInvoice : invoice
+              ),
+            }));
+          }
+        } catch (err) {
+          console.error('Update invoice error:', err);
+          get().setError('Fatura güncellenirken bir hata oluştu.');
+        }
       },
       
       deleteInvoice: async (id) => {
-        // Invoice delete logic here
+        const user = get().user;
+        if (!user) return;
+        
+        try {
+          const success = await kvAdapter.deleteInvoice(user.id, id);
+          if (success) {
+            set((state) => ({
+              invoices: state.invoices.filter((invoice) => invoice.id !== id),
+            }));
+          }
+        } catch (err) {
+          console.error('Delete invoice error:', err);
+          get().setError('Fatura silinirken bir hata oluştu.');
+        }
       },
       
       // Company settings
@@ -591,18 +731,6 @@ export const useAppStore = create<AppState>()(
           get().setError('Demo veriler yüklenirken bir hata oluştu.');
         }
       },
-    }),
-    {
-      name: 'calaf-kv-storage',
-      storage: createJSONStorage(() => localStorage),
-      skipHydration: true,
-      partialize: (state) => ({
-        user: state.user,
-        isAuthenticated: state.isAuthenticated,
-        theme: state.theme,
-        showAmounts: state.showAmounts,
-        notificationPrefs: state.notificationPrefs,
-      }),
-    }
+    })
   )
 );
